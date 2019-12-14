@@ -84,6 +84,7 @@ show collections
 ## Ouverture possible:
 
 -Sharding : Permet la haute disponibilité grâce à une répartion de la donnée sur plusieurs machines. Il peut(doit) être couplé au ReplicaSet.
+
 ![alt text](https://docs.mongodb.com/manual/_images/sharded-cluster-production-architecture.bakedsvg.svg)
 Source: https://docs.mongodb.com/manual/sharding/
 
