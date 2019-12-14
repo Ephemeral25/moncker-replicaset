@@ -6,8 +6,10 @@ Ce projet à pour but de déployer un cluster mongoDB à 4 noeuds (1 primaire, 3
 
 Les schémas suivant vous présentes brièves le type d'architecture mise en place:
 ![alt text](https://docs.mongodb.com/manual/_images/replica-set-read-write-operations-primary.bakedsvg.svg)
+
 Source: https://docs.mongodb.com/manual/replication/
 ![alt text](https://docs.mongodb.com/manual/_images/replica-set-primary-with-two-secondaries.bakedsvg.svg)
+
 Source: https://docs.mongodb.com/manual/replication/
 
 Un noeud primaire sera resposable de l'écriture et de la lecture quand les workers répliquerons la donnée.
@@ -50,7 +52,11 @@ rs.initiate({"_id" : "tut12-replica-set","members" : [{"_id" : 0,"host" : "tut12
 ```
 
 afin de définir le noeud comme primaire nous modifions sa priorité à 2
-`conf = rs.config(); conf.members[0].priority = 2; rs.reconfig(conf);`
+```
+conf = rs.config(); 
+conf.members[0].priority = 2;
+rs.reconfig(conf);
+```
 
 nous créons un compte admin pour le cluster
 
