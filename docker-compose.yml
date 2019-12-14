@@ -1,14 +1,14 @@
 version: "3.0"
 
 volumes:
-  tut12-mongo-keys:
-  tut12-mongo-data-0:
-  tut12-mongo-data-1:
-  tut12-mongo-data-2:
-  tut12-mongo-data-3:
+  node-mongo-keys:
+  node-mongo-data-0:
+  node-mongo-data-1:
+  node-mongo-data-2:
+  node-mongo-data-3:
 
 networks:
-  tut12-replica-set:
+  profile-replica-set:
     driver: bridge
     ipam:
       driver: default
@@ -16,68 +16,68 @@ networks:
         - subnet: 172.10.5.0/24
 
 services:
-  tut12-mongo-keys:
+  node-mongo-keys:
     image: depop/openssl-bats
     volumes:
-      - tut12-mongo-keys:/mongo-conf
+      - node-mongo-keys:/mongo-conf
     command: 'bash -c "openssl rand -base64 741 > /mongo-conf/mongodb-keyfile; chmod 600 /mongo-conf/mongodb-keyfile; chown 999 /mongo-conf/mongodb-keyfile"'
 
   # Primary
-  tut12-mongo-primary:
+  node-mongo-primary:
     image: mongo:latest
     volumes:
-      - tut12-mongo-keys:/opt/keyfile
-      - tut12-mongo-data-0:/data/db
+      - node-mongo-keys:/opt/keyfile
+      - node-mongo-data-0:/data/db
     env_file: ./mongod.env
     ports:
       - 27017:27017
-    command: "mongod --auth --keyFile /opt/keyfile/mongodb-keyfile --replSet tut12-replica-set"
+    command: "mongod --auth --keyFile /opt/keyfile/mongodb-keyfile --replSet profile-replica-set"
     depends_on:
-      - tut12-mongo-keys
+      - node-mongo-keys
     networks:
-      tut12-replica-set:
+      profile-replica-set:
 
   # Worker 1
   tut12-mongo-worker-1:
     image: mongo:latest
     volumes:
-      - tut12-mongo-keys:/opt/keyfile
-      - tut12-mongo-data-1:/data/db
+      - node-mongo-keys:/opt/keyfile
+      - node-mongo-data-1:/data/db
     env_file: ./mongod.env
     ports:
       - 27018:27017
-    command: "mongod --auth --keyFile /opt/keyfile/mongodb-keyfile --replSet tut12-replica-set"
+    command: "mongod --auth --keyFile /opt/keyfile/mongodb-keyfile --replSet profile-replica-set"
     depends_on:
-      - tut12-mongo-keys
+      - node-mongo-keys
     networks:
-      tut12-replica-set:
+      profile-replica-set:
 
   # Worker 2
   tut12-mongo-worker-2:
     image: mongo:latest
     volumes:
-      - tut12-mongo-keys:/opt/keyfile
-      - tut12-mongo-data-2:/data/db
+      - node-mongo-keys:/opt/keyfile
+      - node-mongo-data-2:/data/db
     env_file: ./mongod.env
     ports:
       - 27019:27017
-    command: "mongod --auth --keyFile /opt/keyfile/mongodb-keyfile --replSet tut12-replica-set"
+    command: "mongod --auth --keyFile /opt/keyfile/mongodb-keyfile --replSet profile-replica-set"
     depends_on:
-      - tut12-mongo-keys
+      - node-mongo-keys
     networks:
-      tut12-replica-set:
+      profile-replica-set:
 
   # Worker 3
   tut12-mongo-worker-3:
     image: mongo:latest
     volumes:
-      - tut12-mongo-keys:/opt/keyfile
-      - tut12-mongo-data-3:/data/db
+      - node-mongo-keys:/opt/keyfile
+      - node-mongo-data-3:/data/db
     env_file: ./mongod.env
     ports:
       - 27020:27017
-    command: "mongod --auth --keyFile /opt/keyfile/mongodb-keyfile --replSet tut12-replica-set"
+    command: "mongod --auth --keyFile /opt/keyfile/mongodb-keyfile --replSet profile-replica-set"
     depends_on:
-      - tut12-mongo-keys
+      - node-mongo-keys
     networks:
-      tut12-replica-set:
+      profile-replica-set:

@@ -42,18 +42,19 @@ docker-compose up
 puis en ouvrant un autre terminal nous nous connectons au noeud principal
 
 ```
-docker-compose exec tut12-mongo-primary mongo -u "root" -p "password"
+docker-compose exec node-mongo-primary mongo -u "root" -p "password"
 ```
 
 nous initialisons le replicaSet
 
 ```
-rs.initiate({"_id" : "tut12-replica-set","members" : [{"_id" : 0,"host" : "tut12-mongo-primary:27017"},{"_id" : 1,"host" : "tut12-mongo-worker-1:27017"},{"_id" : 2,"host" : "tut12-mongo-worker-2:27017"},{"_id" : 3,"host" : "tut12-mongo-worker-3:27017"}]});
+rs.initiate({"_id" : "profile-replica-set","members" : [{"_id" : 0,"host" : "node-mongo-primary:27017"},{"_id" : 1,"host" : "node-mongo-worker-1:27017"},{"_id" : 2,"host" : "node-mongo-worker-2:27017"},{"_id" : 3,"host" : "node-mongo-worker-3:27017"}]});
 ```
 
 afin de définir le noeud comme primaire nous modifions sa priorité à 2
+
 ```
-conf = rs.config(); 
+conf = rs.config();
 conf.members[0].priority = 2;
 rs.reconfig(conf);
 ```
@@ -77,7 +78,7 @@ db.createCollection('my_collection');
 Enfin nous pouvons nous connecter et afficher la liste des collections présentes pour vérifier que notre ajout a fonctionné
 
 ```
-docker-compose exec tut12-mongo-primary mongo -u "my_user" -p "password" --authenticationDatabase "my_data"
+docker-compose exec node-mongo-primary mongo -u "my_user" -p "password" --authenticationDatabase "my_data"
 show collections
 ```
 
@@ -90,8 +91,7 @@ show collections
 Source: https://docs.mongodb.com/manual/sharding/
 
 ###Source:
-https://www.youtube.com/watch?v=-XzMfd4XQak 
-+
+https://www.youtube.com/watch?v=-XzMfd4XQak +
 Passage de mongo 4.0.3 à 4.2 avec correction de certaines erreurs liée au changement de version.
 
 ```
