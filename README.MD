@@ -90,9 +90,14 @@ show collections
 
 Source: https://docs.mongodb.com/manual/sharding/
 
-###Source:
-https://www.youtube.com/watch?v=-XzMfd4XQak +
+### Source:
+https://www.youtube.com/watch?v=-XzMfd4XQak 
+
++
+
 Passage de mongo 4.0.3 à 4.2 avec correction de certaines erreurs liée au changement de version.
+
+
 
 ```
 
